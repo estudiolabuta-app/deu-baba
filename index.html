@@ -107,7 +107,7 @@ a{color:inherit}
 <script>
 /* ===================== utilidades ===================== */
 const KEY='acp_controle_v1';
-const APP_VERSION='1.0.0';
+const APP_VERSION='1.0.1';
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
@@ -138,7 +138,7 @@ const optCaixa=(sel)=>CAIXAS.map(c=>`<option ${c===sel?'selected':''}>${c}</opti
 const temDOM=typeof document!=='undefined';
 
 /* ===================== dados ===================== */
-function defaults(){return{v:1,config:{valorUm:30,valorDois:45,valorConvidado:10,valorAmarelo:15,valorVermelho:20,suspVermelho:1,vencimento:10,inicioCobranca:mesAtual(),porTime:6,linhaTer:6,linhaSab:6,posicoes:['Goleiro','Zagueiro','Lateral direito','Lateral esquerdo','Volante','Meia','Meia-atacante','Ponta direita','Ponta esquerda','Centroavante'],
+function defaults(){return{v:1,config:{valorUm:30,valorDois:45,valorConvidado:10,valorAmarelo:15,valorVermelho:20,suspVermelho:1,vencimento:15,aluguelDia:2,inicioCobranca:mesAtual(),porTime:6,linhaTer:6,linhaSab:6,posicoes:['Goleiro','Zagueiro','Lateral direito','Lateral esquerdo','Volante','Meia','Meia-atacante','Ponta direita','Ponta esquerda','Centroavante'],
   criterios:['Velocidade','Ataque','Defesa','Desarme','Condicionamento físico'],pesoIdade:0.5,aluguel:1300,saldoInicial:0,saldosIniciais:{'Associação':0,'Arbitragem':0,'Amistoso':0,'Padrão':0},dataAbertura:'',horaTer:'19:00',horaSab:'17:00',tolerancia:30,duracao:10,mostrarMedias:true,ultimoBackup:null},
   jogadores:[],lanc:[],babas:[],eventos:[],pendConv:[],recebidos:[],cartoes:[],atual:null}}
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY))}catch(e){}const d=defaults();if(!s||typeof s!=='object')return d;
@@ -517,7 +517,7 @@ function rBaba(){
   const aniv=cardAniv();
   const dia=diaDe(ui.dataBaba),L=at.filter(j=>j.pos!=='goleiro'),G=at.filter(j=>j.pos==='goleiro');
   const nAtr=at.filter(j=>bloqueado(j)).length;
-  let h=cardDoisMeses()+aniv+`<div class=card><div class=row><div class=grow><h2 style="margin:0">Novo baba</h2><div class=muted>${dia?(dia==='ter'?'Terça':'Sábado'):'Atenção: não é terça nem sábado'}${nAtr?` · <span style="color:var(--r)">${nAtr} bloqueado${nAtr>1?'s':''}</span>`:''}</div></div><input type=date style="width:auto" value="${ui.dataBaba}" onchange="ui.dataBaba=this.value||hoje();render()"></div></div>`;
+  let h=cardAluguel()+cardDoisMeses()+aniv+`<div class=card><div class=row><div class=grow><h2 style="margin:0">Novo baba</h2><div class=muted>${dia?(dia==='ter'?'Terça':'Sábado'):'Atenção: não é terça nem sábado'}${nAtr?` · <span style="color:var(--r)">${nAtr} bloqueado${nAtr>1?'s':''}</span>`:''}</div></div><input type=date style="width:auto" value="${ui.dataBaba}" onchange="ui.dataBaba=this.value||hoje();render()"></div></div>`;
   h+=`<input placeholder="🔎 Buscar jogador..." value="${esc(ui.busca)}" oninput="ui.busca=this.value;filtrar(this.value)" style="margin-bottom:10px">`;
   h+=`<div class=row style="margin:4px 2px 8px"><h3 class=grow style="margin:0">Jogadores de linha <span class=muted>(${ui.sel.size} marcados)</span></h3>${ui.sel.size?`<button class="btn ghost sm" onclick="ui.sel.clear();render()">Limpar</button>`:''}</div>`;
   h+=L.map(j=>itemPres(j,dia)).join('')||'<p class=muted>Nenhum jogador de linha cadastrado.</p>';
@@ -742,7 +742,7 @@ function rCaixa(){if(ui.caixaView==='eventos')return ui.evento?rEvento():rEvento
   const L0=S.lanc.filter(l=>ymOf(l.data)===m).sort((a,b)=>b.data.localeCompare(a.data));
   const L=fc?L0.filter(l=>l.tipo==='t'?(l.de===fc||l.para===fc):caixaDe(l)===fc):L0;
   const E=L.filter(l=>l.tipo==='e'),Sd=L.filter(l=>l.tipo==='s');const e=soma(E),s=soma(Sd);
-  let h=segCaixa()+mhead(m,'mesCaixa');
+  let h=segCaixa()+cardAluguel()+mhead(m,'mesCaixa');
   h+=`<div class=card style="padding:12px"><div class=row style="margin-bottom:8px"><h3 class=grow style="margin:0">Caixinhas</h3><span class=muted>saldo em ${fmtData(fim<=hoje()?(m+'-'+pad(new Date(+m.slice(0,4),+m.slice(5),0).getDate())):hoje()).slice(0,5)}</span></div>
   <div class=stats style="margin:0">${CAIXAS.map(c=>`<div class=stat style="cursor:pointer;${fc===c?'border-color:var(--neon)':''}" onclick="ui.caixaFiltro=ui.caixaFiltro==='${c}'?'':'${c}';render()"><small>${CAIXA_ICON[c]} ${c}</small><b style="font-size:24px">${brl(saldoCaixa(c,fim))}</b></div>`).join('')}</div>
   <div class=row style="margin-top:10px"><span class=grow>Saldo total</span><b style="font-family:'Bebas Neue';font-size:28px;color:var(--neon)">${brl(saldoTotal(fim))}</b></div>
@@ -802,9 +802,16 @@ function salvarLanc(tipo,id,evId){const g=x=>document.getElementById(x);const va
   else S.lanc.push({id:uid(),tipo,cat:g('lc').value,caixa:cx,desc:desc||g('lc').value,valor,data});
   save();fecha();render();toast('Lançamento salvo')}
 function excluirLanc(id){confirmar('Excluir este lançamento?',()=>{S.lanc=S.lanc.filter(x=>x.id!==id);save();render()},'Excluir',true)}
+function cardAluguel(){if(restrito())return'';const d=+S.config.aluguelDia||2,h=hoje(),dia=+h.slice(8);
+  let m=mesAtual();const prox=addMes(m,1);const ult=new Date(+h.slice(0,4),+h.slice(5,7),0).getDate();
+  const pago=x=>S.lanc.some(l=>l.tipo==='s'&&l.cat==='Aluguel'&&ymOf(l.data)===x);
+  if(!pago(m)&&dia>=d)return`<div class=card style="border-color:var(--r)"><div class=row><div class=grow><h3 style="margin:0;color:#ff7a7a">🏠 Aluguel de ${nomeMes(m).split(' ')[0]} ${dia===d?'vence hoje':'vencido'}</h3><div class=muted>Venc. dia ${pad(d)} · ${brl(S.config.aluguel)} · ainda não lançado no caixa</div></div><button class="btn sm" onclick="ui.mesCaixa='${m}';lancarAluguel()">Lançar</button></div></div>`;
+  const diasAte=(dia<d?d-dia:(ult-dia)+d),alvo=dia<d?m:prox;
+  if(!pago(alvo)&&diasAte<=3)return`<div class=card style="border-color:var(--y)"><div class=row><div class=grow><h3 style="margin:0;color:var(--y)">🏠 Aluguel vence ${diasAte===1?'amanhã':'em '+diasAte+' dias'}</h3><div class=muted>Dia ${pad(d)} · ${brl(S.config.aluguel)}</div></div><button class="btn sm sec" onclick="ui.mesCaixa='${alvo}';lancarAluguel()">Já paguei</button></div></div>`;
+  return''}
 function lancarAluguel(){const m=ui.mesCaixa,v=+S.config.aluguel;const ja=S.lanc.some(l=>l.tipo==='s'&&l.cat==='Aluguel'&&ymOf(l.data)===m);
   confirmar(`Lançar aluguel de <b>${brl(v)}</b> em ${nomeMes(m)}?${ja?'<br><br><b style="color:var(--r)">Já existe um aluguel lançado neste mês.</b>':''}`,()=>{
-    S.lanc.push({id:uid(),tipo:'s',cat:'Aluguel',caixa:'Associação',desc:'Aluguel '+nomeMes(m),valor:v,data:m===mesAtual()?hoje():m+'-01'});save();render();toast('Aluguel lançado')},'Lançar')}
+    S.lanc.push({id:uid(),tipo:'s',cat:'Aluguel',caixa:'Associação',desc:'Aluguel '+nomeMes(m),valor:v,data:m===mesAtual()?hoje():m<mesAtual()?m+'-'+pad(+S.config.aluguelDia||2):hoje()});save();render();toast('Aluguel lançado')},'Lançar')}
 function resumoCaixa(){const m=ui.mesCaixa;const L=S.lanc.filter(l=>ymOf(l.data)===m);const e=soma(L.filter(l=>l.tipo==='e')),s=soma(L.filter(l=>l.tipo==='s'));
   const acum=saldoTotal(m+'-31');const cxs=CAIXAS.map(c=>`${CAIXA_ICON[c]} ${c}: ${brl(saldoCaixa(c,m+'-31'))}`).join('\n');
   const js=S.jogadores.filter(j=>cobravel(j)&&inicioJ(j)<=m);const np=js.filter(j=>pagoLanc(j,m)).length;
@@ -924,7 +931,7 @@ function rConfig(){const c=S.config;
   <p class=muted style="margin-top:0">Suspensão em número de babas. Dá para mudar em cada cartão, conforme a gravidade.</p>
   <div class=row><label class=grow>Dia do vencimento<input id=cv type=number min=1 max=28 value="${c.vencimento}"></label><label class=grow>Cobrar a partir de<input id=ci type=month value="${c.inicioCobranca}"></label></div>
   <p class=muted style="margin-top:0">Meses antes de "cobrar a partir de" não contam como atraso para ninguém.</p></div>
-  <div class=card><h3>Caixa</h3><div class=row><label class=grow>Aluguel mensal<input id=ca type=number step="0.01" value="${c.aluguel}"></label></div>
+  <div class=card><h3>Caixa</h3><div class=row><label class=grow>Aluguel mensal<input id=ca type=number step="0.01" value="${c.aluguel}"></label><label class=grow>Vencimento do aluguel (dia)<input id=cad type=number min=1 max=28 inputmode=numeric value="${c.aluguelDia||2}"></label></div>
   <div class=muted style="margin-bottom:6px">Saldos de abertura das caixinhas</div><div class=row style="flex-wrap:wrap">${CAIXAS.map((x,i)=>`<label class=grow style="min-width:45%">${CAIXA_ICON[x]} ${x}<input id=csi${i} type=number step="0.01" value="${(c.saldosIniciais||{})[x]||0}"></label>`).join('')}</div>
   <label>Data dos saldos de abertura<input id=cda type=date value="${c.dataAbertura||''}"></label></div>
   <div class=card><h3>Horário do baba</h3><div class=row><label class=grow>Terça<input id=cht type=time value="${c.horaTer}"></label><label class=grow>Sábado<input id=chs type=time value="${c.horaSab}"></label><label class=grow>Tolerância (min)<input id=ctl type=number min=0 value="${c.tolerancia}"></label></div>
@@ -940,7 +947,7 @@ function rConfig(){const c=S.config;
   <div class=card style="margin-top:20px"><h3>Zona de perigo</h3><p class=muted style="margin-top:0">Apaga tudo deste aparelho. Faça um backup antes.</p><button class="btn red" onclick="apagarTudo()">Apagar todos os dados</button></div>`}
 function salvarConfig(){const g=x=>document.getElementById(x),c=S.config;
   c.valorUm=parseFloat(g('c1').value)||0;c.valorConvidado=parseFloat(g('ccv').value)||0;c.valorAmarelo=parseFloat(g('cam').value)||0;c.valorVermelho=parseFloat(g('cve').value)||0;c.suspVermelho=Math.max(0,parseInt(g('csv').value)||0);c.valorDois=parseFloat(g('c2').value)||0;c.vencimento=Math.min(28,Math.max(1,parseInt(g('cv').value)||10));
-  if(/^\d{4}-\d{2}$/.test(g('ci').value))c.inicioCobranca=g('ci').value;c.aluguel=parseFloat(g('ca').value)||0;c.saldosIniciais={};CAIXAS.forEach((x,i)=>c.saldosIniciais[x]=parseFloat(g('csi'+i).value)||0);c.dataAbertura=g('cda').value||'';
+  if(/^\d{4}-\d{2}$/.test(g('ci').value))c.inicioCobranca=g('ci').value;c.aluguel=parseFloat(g('ca').value)||0;c.aluguelDia=Math.min(28,Math.max(1,parseInt(g('cad').value)||2));c.saldosIniciais={};CAIXAS.forEach((x,i)=>c.saldosIniciais[x]=parseFloat(g('csi'+i).value)||0);c.dataAbertura=g('cda').value||'';
   {c.linhaTer=Math.min(20,Math.max(1,parseInt(g('clt').value)||6));c.linhaSab=Math.min(20,Math.max(1,parseInt(g('cls').value)||6));const po=g('cpo').value.split('\n').map(x=>x.trim()).filter(Boolean);c.posicoes=[...new Set(po)];}c.horaTer=g('cht').value||c.horaTer;c.horaSab=g('chs').value||c.horaSab;c.tolerancia=Math.max(0,parseInt(g('ctl').value)||0);c.duracao=Math.max(0,parseInt(g('cdu').value)||0);ui.porTime=c.porTime;c.mostrarMedias=g('cm').checked;c.pesoIdade=+g('cpi').value;
   const cr=g('cc').value.split('\n').map(s=>s.trim()).filter(Boolean);c.criterios=[...new Set(cr)];
   save();render();toast('Configurações salvas')}
