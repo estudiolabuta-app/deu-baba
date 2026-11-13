@@ -1,5 +1,5 @@
 // Deu Baba — service worker. Mude VERSAO a cada atualização para os celulares receberem a nova versão.
-const VERSAO='deu-baba-1.0.1';
+const VERSAO='deu-baba-1.0.2';
 const ARQUIVOS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./maskable-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSAO).then(c=>c.addAll(ARQUIVOS)))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==VERSAO).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

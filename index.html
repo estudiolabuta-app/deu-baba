@@ -107,7 +107,8 @@ a{color:inherit}
 <script>
 /* ===================== utilidades ===================== */
 const KEY='acp_controle_v1';
-const APP_VERSION='1.0.1';
+const APP_VERSION='1.0.2';
+const TIMES_BR=["Flamengo|RJ","Fluminense|RJ","Vasco da Gama|RJ","Botafogo|RJ","America-RJ|RJ","Bangu|RJ","Madureira|RJ","Volta Redonda|RJ","Nova Iguaçu|RJ","Portuguesa-RJ|RJ","Boavista|RJ","Olaria|RJ","Bonsucesso|RJ","São Cristóvão|RJ","Audax Rio|RJ","Sampaio Corrêa-RJ|RJ","Maricá|RJ","Corinthians|SP","Palmeiras|SP","São Paulo|SP","Santos|SP","Red Bull Bragantino|SP","Ponte Preta|SP","Guarani|SP","Portuguesa|SP","Mirassol|SP","Novorizontino|SP","Ituano|SP","Botafogo-SP|SP","Ferroviária|SP","Juventus-SP|SP","XV de Piracicaba|SP","São Bento|SP","Santo André|SP","São Caetano|SP","Oeste|SP","Inter de Limeira|SP","Água Santa|SP","Noroeste|SP","Comercial-SP|SP","América-SP|SP","Paulista|SP","Velo Clube|SP","Capivariano|SP","Primavera-SP|SP","Monte Azul|SP","Marília|SP","Taubaté|SP","Atlético Mineiro|MG","Cruzeiro|MG","América-MG|MG","Tombense|MG","Athletic Club|MG","Ipatinga|MG","Villa Nova|MG","Uberlândia|MG","URT|MG","Pouso Alegre|MG","Democrata-GV|MG","Caldense|MG","Boa Esporte|MG","Tupi|MG","Patrocinense|MG","Itabirito|MG","Grêmio|RS","Internacional|RS","Juventude|RS","Caxias|RS","Brasil de Pelotas|RS","Ypiranga-RS|RS","São José-RS|RS","Novo Hamburgo|RS","Esportivo|RS","Pelotas|RS","Aimoré|RS","Guarany de Bagé|RS","São Luiz|RS","Avenida|RS","Athletico Paranaense|PR","Coritiba|PR","Paraná Clube|PR","Operário Ferroviário|PR","Londrina|PR","Cascavel|PR","Maringá|PR","Cianorte|PR","Azuriz|PR","FC Cascavel|PR","Rio Branco-PR|PR","Avaí|SC","Figueirense|SC","Chapecoense|SC","Criciúma|SC","Joinville|SC","Brusque|SC","Hercílio Luz|SC","Marcílio Dias|SC","Barra-SC|SC","Concórdia|SC","Bahia|BA","Vitória|BA","Jacuipense|BA","Juazeirense|BA","Atlético de Alagoinhas|BA","Bahia de Feira|BA","Barcelona de Ilhéus|BA","Jequié|BA","Porto-BA|BA","Sport|PE","Náutico|PE","Santa Cruz|PE","Retrô|PE","Central|PE","Salgueiro|PE","Afogados|PE","Petrolina|PE","Maguary|PE","Sete de Setembro|PE","Vitória das Tabocas|PE","Decisão|PE","Íbis|PE","Porto-PE|PE","Belo Jardim|PE","Serra Talhada|PE","Flamengo de Arcoverde|PE","Ceará|CE","Fortaleza|CE","Ferroviário|CE","Floresta-CE|CE","Iguatu|CE","Icasa|CE","Caucaia|CE","Maracanã-CE|CE","Pacajus|CE","Atlético Cearense|CE","Barbalha|CE","Horizonte|CE","CRB|AL","CSA|AL","ASA|AL","Murici|AL","CSE|AL","Coruripe|AL","Sergipe|SE","Confiança|SE","Itabaiana|SE","Lagarto|SE","Treze|PB","Campinense|PB","Botafogo-PB|PB","Sousa|PB","Serra Branca|PB","Nacional de Patos|PB","ABC|RN","América-RN|RN","Potiguar de Mossoró|RN","Globo FC|RN","Santa Cruz de Natal|RN","Laguna|RN","Sampaio Corrêa|MA","Moto Club|MA","Maranhão|MA","IAPE|MA","Imperatriz|MA","Juventude Samas|MA","Altos|PI","River-PI|PI","Parnahyba|PI","Fluminense-PI|PI","Piauí|PI","4 de Julho|PI","Paysandu|PA","Remo|PA","Tuna Luso|PA","Águia de Marabá|PA","Cametá|PA","Castanhal|PA","Bragantino-PA|PA","São Francisco-PA|PA","Amazonas FC|AM","Manaus FC|AM","Nacional-AM|AM","São Raimundo-AM|AM","Princesa do Solimões|AM","Fast Clube|AM","Goiás|GO","Atlético Goianiense|GO","Vila Nova|GO","Aparecidense|GO","Anápolis|GO","Goiânia|GO","CRAC|GO","Iporá|GO","Inhumas|GO","Brasiliense|DF","Gama|DF","Ceilândia|DF","Real Brasília|DF","Capital-DF|DF","Brasília|DF","Cuiabá|MT","Mixto|MT","Operário-MT|MT","União Rondonópolis|MT","Luverdense|MT","Primavera-MT|MT","Nova Mutum|MT","Operário-MS|MS","Comercial-MS|MS","Costa Rica-MS|MS","Ivinhema|MS","Rio Branco-ES|ES","Desportiva Ferroviária|ES","Vitória-ES|ES","Real Noroeste|ES","Porto Vitória|ES","Nova Venécia|ES","Tocantinópolis|TO","Palmas|TO","Capital-TO|TO","Interporto|TO","Gurupi|TO","Rio Branco-AC|AC","Galvez|AC","Humaitá-AC|AC","Independência-AC|AC","Porto Velho|RO","Ji-Paraná|RO","Guaporé|RO","Real Ariquemes|RO","São Raimundo-RR|RR","Monte Roraima|RR","GAS|RR","Trem|AP","Ypiranga-AP|AP","Santana|AP","Oratório|AP"].map(x=>{const[n,u]=x.split('|');return{n,u}});
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
@@ -228,7 +229,10 @@ function vencer(i){const A=S.atual;if(A.quadra.length<2)return;snap();const w=A.
   A.log.push(fechaJogo({a:A.quadra[0].num,b:A.quadra[1].num,v:w.num}));A.quadra=[w];sai(l);entra();sync();
   toast(`Time ${l.num} saiu · entra o Time ${A.quadra[1]?A.quadra[1].num:'—'}`)}
 function empateRes(i){const A=S.atual;snap();const p=A.quadra[i],o=A.quadra[1-i];
-  A.log.push(fechaJogo({a:A.quadra[0].num,b:A.quadra[1].num,v:0,par:p.num}));A.quadra=[];sai(p);sai(o);entra();fecha();sync()}
+  const tres=A.quadra.length+A.fila.length===3;
+  A.log.push(fechaJogo({a:A.quadra[0].num,b:A.quadra[1].num,v:0,par:p.num}));
+  if(tres){A.quadra=[p];sai(o)}else{A.quadra=[];sai(p);sai(o)}
+  entra();fecha();sync();if(tres)toast(`Time ${p.num} fica em quadra · entra o Time ${A.quadra[1]?A.quadra[1].num:'—'}`)}
 /* ----- partida ao vivo ----- */
 const ESTILOS_GOL=['Normal','De cabeça','Bicicleta','Gol de placa','Falta','Pênalti','Contra'];
 const ESTILOS_DEF=['Defesa','Paredão','Pênalti defendido'];
@@ -351,19 +355,20 @@ function compartilhar(txt){if(navigator.share){navigator.share({text:txt}).catch
 function mostraTexto(t){abre(`<h2>Copie o texto</h2><textarea rows=12>${esc(t)}</textarea><button class="btn block" style="margin-top:10px" onclick="fecha()">Fechar</button>`)}
 function avisos(){let h='';if(!salvaOk)h+=`<div class=warn><b>Atenção:</b> este navegador não está conseguindo salvar os dados. Faça backup em <b>Mais › Backup</b> antes de fechar.</div>`;
   const ub=S.config.ultimoBackup;const dias=ub?Math.floor((Date.now()-new Date(ub))/864e5):null;
-  if(!restrito()&&S.jogadores.length&&(dias===null||dias>=7)&&!(tab==='baba'&&S.atual))h+=`<div class=warn>💾 ${dias===null?'Você ainda não fez nenhum backup.':`Último backup há ${dias} dias.`} Os dados ficam só neste aparelho. <a href="#" onclick="go('mais');return false" style="color:inherit;font-weight:700">Fazer backup</a></div>`;
+  if(!restrito()&&!S.modoBaba&&S.jogadores.length&&(dias===null||dias>=7)&&!(tab==='baba'&&S.atual))h+=`<div class=warn>💾 ${dias===null?'Você ainda não fez nenhum backup.':`Último backup há ${dias} dias.`} Os dados ficam só neste aparelho. <a href="#" onclick="go('mais');return false" style="color:inherit;font-weight:700">Fazer backup</a></div>`;
   return h}
 function render(){if(!temDOM)return;const y=window.scrollY;
   if(restrito()&&!['baba','mens','mais'].includes(tab))tab='baba';
   {const bm=document.querySelector('#nav button[data-t=mens]');if(bm)bm.lastChild.textContent=restrito()?'Receber':'Mensalidades'}
-  document.querySelectorAll('#nav button').forEach(b=>b.style.display=restrito()&&!['baba','mens','mais'].includes(b.dataset.t)?'none':'');
+  if(S.modoBaba&&!['baba','mais'].includes(tab))tab='baba';
+  document.querySelectorAll('#nav button').forEach(b=>b.style.display=(S.modoBaba&&!['baba','mais'].includes(b.dataset.t))||(restrito()&&!['baba','mens','mais'].includes(b.dataset.t))?'none':'');
   const f={baba:rBaba,jog:rJog,mens:()=>restrito()?rReceber():rMens(),caixa:rCaixa,mais:rMais}[tab];
   document.getElementById('app').innerHTML=avisos()+f();
   document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
-  document.getElementById('topinfo').innerHTML=S.atual?'⚽ Baba em andamento':restrito()?'Modo sorteio · offline':'Offline · salvo no aparelho';
+  document.getElementById('topinfo').innerHTML=S.modoBaba?`<span onclick="sairModoBaba()" style="color:var(--neon);cursor:pointer">🔒 Modo baba</span>`:S.atual?'⚽ Baba em andamento':restrito()?'Modo sorteio · offline':'Offline · salvo no aparelho';
   window.scrollTo(0,y);
   if(tab==='baba'&&!S.atual&&ui.busca)filtrar(ui.busca);
-  if(tab==='jog'&&ui.buscaJ)filtrar(ui.buscaJ)}
+  if(tab==='jog'&&ui.buscaJ)filtrar(ui.buscaJ);wakeSync()}
 
 /* ===================== aba BABA ===================== */
 /* ----- cartões ----- */
@@ -376,7 +381,7 @@ const bloqueado=j=>emAtraso(j).length>0||cartoesAbertos(j).length>0;
 function tagsCartao(j){return cartoesAbertos(j).map(c=>{const r=suspRest(c);return`<span class="tag red">${COR[c.tipo]} ${r?`Suspenso: falta${r>1?'m':''} ${r} baba${r>1?'s':''}`:''}${r&&!c.pago?' · ':''}${!c.pago?(restrito()?'cartão a pagar':'a pagar '+brl(c.valor)):''}</span>`}).join('')}
 function msgBloq(j){if(cartoesAbertos(j).some(c=>suspRest(c)>0))return'Jogador suspenso por cartão vermelho.';if(cartoesAbertos(j).length)return'Cartão em aberto: só joga depois de pagar.';
   return restrito()?'Em atraso. Se pagou agora, toque em "Pagou agora" para liberar.':'Mensalidade em atraso. Toque em "Receber" para liberar.'}
-function btnBloq(j,ctx){if(emAtraso(j).length)return btnReceber(j,ctx);const c=cartoesAbertos(j).find(c=>!c.pago);
+function btnBloq(j,ctx){if(S.modoBaba)return'';if(emAtraso(j).length)return btnReceber(j,ctx);const c=cartoesAbertos(j).find(c=>!c.pago);
   return c?`<button class="btn sm" onclick="event.stopPropagation();abrirCartaoPag('${c.id}','${ctx}')">${restrito()?'Pagou agora':'Receber'}</button>`:''}
 function criaCartao(jid,tipo,susp,origem){const c={id:uid(),jogId:jid,tipo,data:(babaAtual()||{}).data||hoje(),babaId:S.atual?S.atual.babaId:null,
   valor:tipo==='vermelho'?+S.config.valorVermelho:+S.config.valorAmarelo,susp:tipo==='vermelho'?+susp:0,pago:false,origem,local:restrito()||undefined};S.cartoes.push(c);return c}
@@ -463,7 +468,7 @@ function confirmarConv(){const C=ui.cv;let j=C.id&&getJ(C.id);
   if(C.ctx==='chegou'){registrarDiaria(j,C.pago,(babaAtual()||{}).data||hoje());save();chegou(j.id);return}
   ui.conv=ui.conv||{};ui.conv[j.id]=C.pago;if(j.pos==='goleiro'){if(!ui.golOrdem.includes(j.id))ui.golOrdem.push(j.id)}else ui.sel.add(j.id);
   save();fecha();render();toast(`${j.nome} entrou como convidado`)}
-function btnReceber(j,ctx){const fn=j.convidado?(restrito()?`abrirReceberR('${j.id}','${ctx}')`:`abrirReceberConv('${j.id}')`):(restrito()?`abrirReceberR('${j.id}','${ctx}')`:`abrirReceber('${j.id}',null,'${ctx}')`);
+function btnReceber(j,ctx){if(S.modoBaba)return'';const fn=j.convidado?(restrito()?`abrirReceberR('${j.id}','${ctx}')`:`abrirReceberConv('${j.id}')`):(restrito()?`abrirReceberR('${j.id}','${ctx}')`:`abrirReceber('${j.id}',null,'${ctx}')`);
   return`<button class="btn sm" onclick="event.stopPropagation();${fn}">${restrito()?'Pagou agora':'Receber'}</button>`}
 function abrirReceberR(id,ctx){const j=getJ(id),c=S.config;ui.recR={id,ctx};
   if(j.convidado){const v=+c.valorConvidado||10;
@@ -517,7 +522,7 @@ function rBaba(){
   const aniv=cardAniv();
   const dia=diaDe(ui.dataBaba),L=at.filter(j=>j.pos!=='goleiro'),G=at.filter(j=>j.pos==='goleiro');
   const nAtr=at.filter(j=>bloqueado(j)).length;
-  let h=cardAluguel()+cardDoisMeses()+aniv+`<div class=card><div class=row><div class=grow><h2 style="margin:0">Novo baba</h2><div class=muted>${dia?(dia==='ter'?'Terça':'Sábado'):'Atenção: não é terça nem sábado'}${nAtr?` · <span style="color:var(--r)">${nAtr} bloqueado${nAtr>1?'s':''}</span>`:''}</div></div><input type=date style="width:auto" value="${ui.dataBaba}" onchange="ui.dataBaba=this.value||hoje();render()"></div></div>`;
+  let h=(S.modoBaba?'':cardAluguel()+cardDoisMeses())+aniv+`<div class=card><div class=row><div class=grow><h2 style="margin:0">Novo baba</h2><div class=muted>${dia?(dia==='ter'?'Terça':'Sábado'):'Atenção: não é terça nem sábado'}${nAtr?` · <span style="color:var(--r)">${nAtr} bloqueado${nAtr>1?'s':''}</span>`:''}</div></div><input type=date style="width:auto" value="${ui.dataBaba}" onchange="ui.dataBaba=this.value||hoje();render()"></div></div>`;
   h+=`<input placeholder="🔎 Buscar jogador..." value="${esc(ui.busca)}" oninput="ui.busca=this.value;filtrar(this.value)" style="margin-bottom:10px">`;
   h+=`<div class=row style="margin:4px 2px 8px"><h3 class=grow style="margin:0">Jogadores de linha <span class=muted>(${ui.sel.size} marcados)</span></h3>${ui.sel.size?`<button class="btn ghost sm" onclick="ui.sel.clear();render()">Limpar</button>`:''}</div>`;
   h+=L.map(j=>itemPres(j,dia)).join('')||'<p class=muted>Nenhum jogador de linha cadastrado.</p>';
@@ -550,7 +555,7 @@ function teamHTML(t,q,prox){const k=S.atual.porTime,f=k-t.jog.length;
   ${t.jog.map(p=>`<div class=pl onclick="opJog('${p.id}')"><span class=n>${p.seq}</span>${esc(nomeJ(p.id))}</div>`).join('')}
   ${S.config.mostrarMedias&&!restrito()&&ms.length?`<div class=avg>Média ${avg.toFixed(1)}</div>`:''}</div>`}
 function rJogo(){const A=S.atual,b=babaAtual()||{data:hoje()};
-  let h=`<div class=card><div class=row><div class=grow><h2 style="margin:0">Baba de ${fmtData(b.data)}</h2><div class=muted>${A.presentes.length} presentes · ${A.log.length} partida${A.log.length!==1?'s':''} · ${A.porTime} na linha</div></div><button class="btn ghost sm" onclick="compartilharTimes()">Enviar times</button></div></div>`;
+  let h=`<div class=card><div class=row><div class=grow><h2 style="margin:0">Baba de ${fmtData(b.data)}</h2><div class=muted>${A.presentes.length} presentes · ${A.log.length} partida${A.log.length!==1?'s':''} · ${A.porTime} na linha</div></div><div class=gap style="flex-direction:column;gap:6px"><button class="btn ghost sm" onclick="compartilharTimes()">Enviar times</button>${S.modoBaba?'':`<button class="btn sec sm" onclick="ativarModoBaba()">🔒 Modo baba</button>`}</div></div></div>`;
   {const hj=aniversariantes(0).filter(x=>A.presentes.includes(x.j.id));if(hj.length)h+=`<div class=card style="border-color:var(--neon);padding:10px 14px">🎂 Hoje é aniversário de <b>${hj.map(x=>esc(x.j.nome)).join(' e ')}</b>! <a href="#" onclick="parabens();return false" style="color:var(--neon)">Mandar parabéns</a></div>`}
   if(A.quadra.length===2){const[t1,t2]=A.quadra;
     if(A.jogo&&(A.jogo.ta!==t1.num||A.jogo.tb!==t2.num))A.jogo=null;
@@ -576,7 +581,7 @@ function rJogo(){const A=S.atual,b=babaAtual()||{data:hoje()};
   return h}
 function linhaPartida(p){const g=(p.ev||[]).filter(e=>e.tipo==='gol');
   return`Time ${p.a} ${p.pa!=null?`<b>${p.pa} x ${p.pb}</b>`:'x'} Time ${p.b}${g.length?`<div class=muted>${g.map(e=>`⚽ ${esc(nomeJ(e.id))}${e.estilo==='Contra'?' (contra)':''}`).join(' · ')}</div>`:''}`}
-function abrirEmpate(){const[t1,t2]=S.atual.quadra;abre(`<h2>Empate!</h2><p class=muted>Os dois times saem. Quem ganhou no par ou ímpar vira o time da vez: completa primeiro o time incompleto ou vira o próximo da fila.</p><p><b>Quem ganhou no par ou ímpar?</b></p><div class=gap><button class=btn onclick="empateRes(0)">Time ${t1.num}</button><button class=btn onclick="empateRes(1)">Time ${t2.num}</button><button class="btn ghost" onclick="fecha()">Cancelar</button></div>`)}
+function abrirEmpate(){const[t1,t2]=S.atual.quadra;abre(`<h2>Empate!</h2><p class=muted>${S.atual.quadra.length+S.atual.fila.length===3?'Com só 3 times: quem ganhar no par ou ímpar <b>fica em quadra</b>; o outro sai (completa o time de fora, se estiver incompleto) e o próximo time entra.':'Os dois times saem. Quem ganhou no par ou ímpar vira o time da vez: completa primeiro o time incompleto ou vira o próximo da fila.'}</p><p><b>Quem ganhou no par ou ímpar?</b></p><div class=gap><button class=btn onclick="empateRes(0)">Time ${t1.num}</button><button class=btn onclick="empateRes(1)">Time ${t2.num}</button><button class="btn ghost" onclick="fecha()">Cancelar</button></div>`)}
 function opJog(id){const A=S.atual,j=getJ(id),gk=j&&j.pos==='goleiro',res=(A.reservas||[]).includes(id);const R=A.reservas||[];
   let b='';
   if(res)b=`<button class="btn red" onclick="removerDoBaba('${id}')">Foi embora</button>`;
@@ -639,9 +644,37 @@ function rJog(){const f=ui.filtroJog;let js=S.jogadores.slice().sort(byNome);
   let h=`<div class=row style="margin-bottom:10px"><div class=grow><h2 style="margin:0">Jogadores</h2><div class=muted>${nA} ativos</div></div><button class=btn onclick="abrirJog()">+ Novo</button></div>`;
   h+=`<input placeholder="🔎 Buscar..." value="${esc(ui.buscaJ)}" oninput="ui.buscaJ=this.value;filtrar(this.value)" style="margin-bottom:10px">`;
   h+=`<div class=seg style="margin-bottom:10px">${[['todos','Todos'],['linha','Linha'],['goleiro','Goleiros'],['convidados','Convidados'],['inativos','Inativos']].map(([k,l])=>`<button class="${f===k?'on':''}" onclick="ui.filtroJog='${k}';render()">${l}</button>`).join('')}</div>`;
-  h+=`<div class="card list" style="padding:4px 12px">${js.map(j=>{const atr=emAtraso(j);return`<div class=it data-n="${esc(norm(j.nome))}" onclick="abrirJog('${j.id}')"><div class=grow><b>${esc(j.nome)}</b><div class=sub>${j.diretor?'<span class="tag grn">Diretor</span>':''}${j.convidado?'<span class="tag gray">Convidado</span>':''}${j.pos==='goleiro'?'<span class="tag yel">Goleiro</span>':j.posicao?`<span class="tag grn">${esc(j.posicao)}</span>`:''}${j.convidado?'':`<span class="tag gray">${DIAS[j.plano]}</span>`}${j.isento?'<span class="tag gray">Isento</span>':''}${idade(j.nasc)!=null?`<span class="tag gray">${idade(j.nasc)} anos</span>`:''}${atr.length?`<span class="tag red">${atr.length} em atraso</span>`:''}</div></div><div class=badge>${media(j).toFixed(1)}</div></div>`}).join('')||'<p class=muted>Nenhum jogador aqui.</p>'}</div>`;
-  if(js.length)h+=`<p class=muted style="text-align:center">O número à direita é a média da avaliação da diretoria.</p>`;
+  h+=`<div class="card list" style="padding:4px 12px">${js.map(j=>{const atr=emAtraso(j);return`<div class=it data-n="${esc(norm(j.nome))}" onclick="abrirFicha('${j.id}')"><div class=grow><b>${esc(j.nome)}</b>${j.time?` <span class=muted style="font-size:12px">❤️ ${esc(j.time)}</span>`:''}<div class=sub>${j.diretor?'<span class="tag grn">Diretor</span>':''}${j.convidado?'<span class="tag gray">Convidado</span>':''}${j.pos==='goleiro'?'<span class="tag yel">Goleiro</span>':j.posicao?`<span class="tag grn">${esc(j.posicao)}</span>`:''}${j.convidado?'':`<span class="tag gray">${DIAS[j.plano]}</span>`}${j.isento?'<span class="tag gray">Isento</span>':''}${idade(j.nasc)!=null?`<span class="tag gray">${idade(j.nasc)} anos</span>`:''}${atr.length?`<span class="tag red">${atr.length} em atraso</span>`:''}</div></div><div class=badge>${media(j).toFixed(1)}</div></div>`}).join('')||'<p class=muted>Nenhum jogador aqui.</p>'}</div>`;
+  if(js.length)h+=`<p class=muted style="text-align:center">O número à direita é o nível (média da avaliação da diretoria). Toque no jogador para ver a ficha.</p>`;
   return h}
+function sugTime(q){const e=document.getElementById('jtsug');if(!e)return;const s=norm(q).trim();if(s.length<2){e.innerHTML='';return}
+  const L=TIMES_BR.filter(t=>norm(t.n).includes(s)).sort((a,b)=>(norm(a.n).startsWith(s)?0:1)-(norm(b.n).startsWith(s)?0:1)).slice(0,8);
+  const exato=TIMES_BR.some(t=>norm(t.n)===s);
+  e.innerHTML=L.map(t=>`<button type=button class=chip onclick="escolheTime('${t.n.replace(/'/g,"\\'")}')">${esc(t.n)} <span class=muted>${t.u}</span></button>`).join('')+(exato?'':`<span class=muted style="align-self:center;font-size:12px">${L.length?'Ou deixe como digitou para um time de fora.':'Time não está na lista: será salvo como digitou.'}</span>`)}
+function escolheTime(n){const i=document.getElementById('jtime');i.value=n;document.getElementById('jtsug').innerHTML=''}
+function radarSVG(notas){const cs=S.config.criterios,N=cs.length;if(N<3)return`<div>${cs.map(c=>`<div class=row style="padding:3px 0"><span class=grow>${esc(c)}</span><b>${notas&&notas[c]!=null?notas[c]:5}</b></div>`).join('')}</div>`;
+  const W=340,H=300,cx=W/2,cy=H/2+4,R=Math.min(105,(H/2)-34);const ang=i=>(-90+i*360/N)*Math.PI/180;const pt=(i,r)=>[cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))];
+  let g='';for(let l=1;l<=5;l++){const r=R*l/5;g+=`<polygon points="${cs.map((_,i)=>pt(i,r).join(',')).join(' ')}" fill="none" stroke="#2a2a2a" stroke-width="1"/>`}
+  cs.forEach((_,i)=>{const[x,y]=pt(i,R);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#2a2a2a"/>`});
+  const vals=cs.map(c=>{const v=notas&&notas[c];return Math.max(0,Math.min(10,v==null?5:+v))});
+  g+=`<polygon points="${vals.map((v,i)=>pt(i,R*v/10).join(',')).join(' ')}" fill="rgba(57,255,20,.28)" stroke="#39ff14" stroke-width="2" stroke-linejoin="round"/>`;
+  vals.forEach((v,i)=>{const[x,y]=pt(i,R*v/10);g+=`<circle cx="${x}" cy="${y}" r="3" fill="#39ff14"/>`});
+  cs.forEach((c,i)=>{const[x,y]=pt(i,R+16);const co=Math.cos(ang(i));const an=Math.abs(co)<.25?'middle':co>0?'start':'end';const dy=Math.sin(ang(i))>.5?12:Math.sin(ang(i))<-.5?-4:4;
+    const nm=c.length>16?c.slice(0,15)+'…':c;g+=`<text x="${x}" y="${y+dy}" text-anchor="${an}" font-size="11" fill="#bdbdbd" font-family="system-ui,sans-serif">${esc(nm)} <tspan fill="#39ff14" font-weight="700">${vals[i]}</tspan></text>`});
+  return`<svg viewBox="-45 0 ${W+90} ${H}" width="100%" style="max-width:460px;display:block;margin:0 auto">${g}</svg>`}
+function statsJog(id){let gols=0,ast=0,jg=0,vit=0,def=0;S.babas.forEach(b=>(b.partidas||[]).forEach(p=>{const ja=(p.ja||[]).includes(id),jb=(p.jb||[]).includes(id);if(ja||jb){jg++;if(p.v&&((ja&&p.v===p.a)||(jb&&p.v===p.b)))vit++}
+  (p.ev||[]).forEach(e=>{if(e.tipo==='gol'&&e.id===id&&e.estilo!=='Contra')gols++;if(e.tipo==='gol'&&e.assist===id)ast++;if(e.tipo==='defesa'&&e.id===id)def++})}));
+  const ct=S.cartoes.filter(c=>c.jogId===id&&!c.cancelado);return{gols,ast,jg,vit,def,am:ct.filter(c=>c.tipo==='amarelo').length,ve:ct.filter(c=>c.tipo==='vermelho').length}}
+function abrirFicha(id){const j=getJ(id),st=statsJog(id),a=idade(j.nasc);
+  const box=(l,v)=>`<div class=stat style="padding:8px 6px;text-align:center"><small>${l}</small><b style="font-size:24px">${v}</b></div>`;
+  abre(`<div class=row style="align-items:flex-start"><div class=grow><h2 style="margin:0;font-size:32px">${esc(j.nome)}</h2>
+   <div class=sub style="margin-top:6px">${j.pos==='goleiro'?'<span class="tag yel">Goleiro</span>':j.posicao?`<span class="tag grn">${esc(j.posicao)}</span>`:''}${j.diretor?'<span class="tag grn">Diretor</span>':''}${j.convidado?'<span class="tag gray">Convidado</span>':`<span class="tag gray">${DIAS[j.plano]}</span>`}${a!=null?`<span class="tag gray">${a} anos</span>`:''}</div>
+   ${j.time?`<div class=muted style="margin-top:6px">❤️ ${esc(j.time)}</div>`:''}</div>
+   <div style="text-align:center"><div class=badge style="font-size:34px;padding:6px 10px 2px;min-width:64px">${media(j).toFixed(1)}</div><div class=muted style="font-size:11px;margin-top:3px">NÍVEL</div></div></div>
+  <div style="margin:10px -6px 4px">${radarSVG(j.notas)}</div>
+  <div class=stats style="grid-template-columns:repeat(4,1fr);gap:6px">${box('Jogos',st.jg)}${box('Vitórias',st.vit)}${box('Gols',st.gols)}${box(j.pos==='goleiro'?'Defesas':'Assist.',j.pos==='goleiro'?st.def:st.ast)}</div>
+  ${st.am||st.ve?`<p class=muted style="margin:0 0 10px">Cartões: ${st.am?'🟨 '+st.am:''} ${st.ve?'🟥 '+st.ve:''}</p>`:''}
+  <div class=gap>${S.modoBaba?'':`<button class=btn style="flex:1" onclick="abrirJog('${id}')">Editar</button>`}<button class="btn ghost" onclick="fecha()">Fechar</button></div>`)}
 function abrirJog(id){const j=id?getJ(id):{nome:'',pos:'linha',posicao:'',plano:'sab',ativo:true,isento:false,inicio:mesAtual(),tel:'',notas:{}};
   const cs=S.config.criterios;const o=(v,l,cur)=>`<option value="${v}" ${cur===v?'selected':''}>${l}</option>`;
   abre(`<h2>${id?'Editar':'Novo'} jogador</h2>
@@ -650,6 +683,8 @@ function abrirJog(id){const j=id?getJ(id):{nome:'',pos:'linha',posicao:'',plano:
     return`<option value="" ${cur===''?'selected':''}>Linha (sem posição)</option>`+[...ps,...extra].map(x=>`<option value="${esc(x)}" ${x===cur?'selected':''}>${esc(x)}</option>`).join('')})()}</select></label>
   <label class=grow>Plano<select id=jpl>${o('ter',`Terça (R$${S.config.valorUm})`,j.plano)}${o('sab',`Sábado (R$${S.config.valorUm})`,j.plano)}${o('ambos',`Ter+Sáb (R$${S.config.valorDois})`,j.plano)}</select></label></div>
   <div class=row><label class=grow>Cobrar a partir de<input id=ji type=month value="${j.inicio||mesAtual()}"></label><label class=grow>Telefone<input id=jt inputmode=tel value="${esc(j.tel||'')}"></label></div>
+  <label>Time do coração<input id=jtime value="${esc(j.time||'')}" placeholder="Comece a digitar… ex.: Sport" autocomplete=off oninput="sugTime(this.value)" onfocus="sugTime(this.value)"></label>
+  <div id=jtsug class=chips style="margin-top:-6px"></div>
   <label>Data de nascimento <span id=jidade style="color:var(--neon)">${idade(j.nasc)!=null?'· '+idade(j.nasc)+' anos':''}</span><input id=jnasc type=date value="${j.nasc||''}" max="${hoje()}" onchange="const a=idade(this.value);document.getElementById('jidade').textContent=a!=null?'· '+a+' anos':'';medEd()"></label>
   <label class=ck><input type=checkbox id=jdir ${j.diretor?'checked':''}> Diretor (isento de mensalidade)</label>
   <label class=ck><input type=checkbox id=jcv ${j.convidado?'checked':''}> Convidado (paga ${brl(S.config.valorConvidado)} por baba, sem mensalidade)</label>
@@ -661,17 +696,28 @@ function abrirJog(id){const j=id?getJ(id):{nome:'',pos:'linha',posicao:'',plano:
 function medEd(){const notas={};document.querySelectorAll('#sheet input[type=range]').forEach(r=>notas[r.dataset.c]=+r.value);const nz=document.getElementById('jnasc');const e=document.getElementById('jmed');if(e)e.textContent=mediaDe(notas,nz?nz.value:'').toFixed(1)}
 function salvarJog(id){const v=x=>document.getElementById(x);const nome=v('jn').value.trim();if(!nome){toast('Informe o nome');return}
   const notas={};document.querySelectorAll('#sheet input[type=range]').forEach(r=>notas[r.dataset.c]=+r.value);
-  const posicao=v('jp').value;const d={diretor:v('jdir').checked,convidado:v('jcv').checked,nasc:v('jnasc').value||'',nome,posicao,pos:norm(posicao)==='goleiro'?'goleiro':'linha',plano:v('jpl').value,inicio:/^\d{4}-\d{2}$/.test(v('ji').value)?v('ji').value:mesAtual(),tel:v('jt').value.trim(),isento:v('jis').checked,ativo:v('ja').checked};
+  const posicao=v('jp').value;const d={time:v('jtime').value.trim(),diretor:v('jdir').checked,convidado:v('jcv').checked,nasc:v('jnasc').value||'',nome,posicao,pos:norm(posicao)==='goleiro'?'goleiro':'linha',plano:v('jpl').value,inicio:/^\d{4}-\d{2}$/.test(v('ji').value)?v('ji').value:mesAtual(),tel:v('jt').value.trim(),isento:v('jis').checked,ativo:v('ja').checked};
   if(id){const j=getJ(id);Object.assign(j,d);j.notas=Object.assign(j.notas||{},notas)}else S.jogadores.push({id:uid(),...d,notas});
   save();fecha();render();toast('Jogador salvo')}
 function excluirJog(id){confirmar('Excluir este jogador? Os pagamentos já lançados continuam no caixa.<br><br><span class=muted>Se ele só parou de vir, prefira desmarcar "Ativo".</span>',()=>{S.jogadores=S.jogadores.filter(j=>j.id!==id);ui.sel.delete(id);save();render()},'Excluir',true)}
 
 /* ===================== aba MENSALIDADES ===================== */
+function abrirAviso(){ui.av=ui.av||{dia:'ter',isentos:true};modalAviso()}
+function textoAviso(){const A=ui.av,m=ui.mesMens,c=S.config;
+  const L=S.jogadores.filter(j=>j.ativo&&!j.convidado&&(j.plano==='ambos'||j.plano===A.dia)&&((cobravel(j)&&pagoLanc(j,m))||(A.isentos&&(j.isento||j.diretor)))).sort(byNome);
+  const mes=MESES[+m.slice(5)-1].toUpperCase(),baba=A.dia==='ter'?'TERÇA':'SÁBADO',d=+c.vencimento;
+  return{L,txt:`📣 *PAGANTES DO MÊS DE ${mes} — BABA DE ${baba}*\n\n${L.map(j=>'✅ '+j.nome).join('\n')||'(ninguém ainda)'}\n\n⚠️ *Atenção!* Quem não estiver em dia até o dia ${d} não jogará a partir do próximo baba depois do dia ${d}. Para jogar, os cartões também devem estar quitados, independente da mensalidade estar paga.\n\n_Deu Baba · ACP_`}}
+function modalAviso(){const A=ui.av,{L,txt}=textoAviso();
+  abre(`<h2>📣 Aviso de pagantes</h2><p class=muted style="margin-top:0">${nomeMes(ui.mesMens)} · ${L.length} na lista. Para outro mês, mude o mês na tela de Mensalidades.</p>
+  <div class=chips>${chip('Baba de terça',A.dia==='ter',"ui.av.dia='ter';modalAviso()")}${chip('Baba de sábado',A.dia==='sab',"ui.av.dia='sab';modalAviso()")}</div>
+  <label class=ck style="margin-bottom:10px"><input type=checkbox ${A.isentos?'checked':''} onchange="ui.av.isentos=this.checked;modalAviso()"> Incluir diretores e isentos</label>
+  <div style="background:#0b0b0b;border:1px solid var(--bd);border-radius:12px;padding:12px;white-space:pre-wrap;font-size:14px;max-height:40vh;overflow:auto">${esc(txt)}</div>
+  <div class=gap style="margin-top:12px"><button class=btn style="flex:1" onclick="compartilhar(textoAviso().txt)">Enviar no WhatsApp</button><button class="btn ghost" onclick="fecha()">Fechar</button></div>`)}
 function rMens(){const m=ui.mesMens,f=ui.filtroMens;
   const js=S.jogadores.filter(j=>cobravel(j)&&inicioJ(j)<=m).sort(byNome);
   let esp=0,rec=0,np=0;const rows=js.map(j=>{const l=pagoLanc(j,m);esp+=valorPlano(j);if(l){rec+=+l.valor;np++}return{j,l}});
   const atrJ=S.jogadores.filter(j=>!j.convidado&&emAtraso(j).length);const atrTot=atrJ.reduce((s,j)=>s+emAtraso(j).length*valorPlano(j),0);
-  let h=cardDoisMeses()+mhead(m,'mesMens');
+  let h=cardDoisMeses()+mhead(m,'mesMens')+`<button class="btn block" style="margin-bottom:12px" onclick="abrirAviso()">📣 Aviso de pagantes</button>`;
   h+=`<div class=stats><div class=stat><small>Esperado no mês</small><b>${brl(esp)}</b></div><div class="stat g"><small>Recebido (${np} de ${js.length})</small><b>${brl(rec)}</b></div>
   <div class=stat><small>Falta receber no mês</small><b>${brl(Math.max(0,esp-rec))}</b></div><div class="stat r"><small>Total em atraso (${atrJ.length} jog.)</small><b>${brl(atrTot)}</b></div></div>`;
   h+=`<div class=seg style="margin-bottom:10px">${[['todos','Todos'],['pend','Pendentes'],['pagos','Pagos']].map(([k,l])=>`<button class="${f===k?'on':''}" onclick="ui.filtroMens='${k}';render()">${l}</button>`).join('')}</div>`;
@@ -852,7 +898,7 @@ function desfazerRec(rid){const r=S.recebidos.find(x=>x.id===rid);confirmar(`Des
   if(j){if(r.tipo==='mensalidade')j.pagoAte=r.prev!==undefined?r.prev:j.pagoAte;if(r.tipo==='convidado')j.devendo=true;if(r.tipo==='cartao'){const c=S.cartoes.find(x=>x.id===r.cartaoId);if(c)c.pago=false}}
   S.recebidos=S.recebidos.filter(x=>x.id!==rid);save();render()},'Desfazer',true)}
 function rMaisRestrito(){const ga=S.pacoteEm;const nb=S.babas.filter(b=>!b.enviado).length,nr=(S.recebidos||[]).filter(r=>!r.enviado).length;
-  return`<div class=card><h2 style="margin-bottom:4px">Modo sorteio</h2><p class=muted style="margin-top:0">Este aparelho só faz o sorteio e o controle do baba. Lista de jogadores e mensalidades atualizada em <b>${ga?fmtData(ga.slice(0,10)):'—'}</b>.</p>
+  return`<button class="btn sec block" style="margin-bottom:12px" onclick="ativarModoBaba()">🔒 Ativar modo baba (esconder a aba Receber)</button><div class=card><h2 style="margin-bottom:4px">Modo sorteio</h2><p class=muted style="margin-top:0">Este aparelho só faz o sorteio e o controle do baba. Lista de jogadores e mensalidades atualizada em <b>${ga?fmtData(ga.slice(0,10)):'—'}</b>.</p>
   <label class="btn block" style="margin:0 0 8px;text-align:center;display:block">Atualizar lista (importar pacote)<input type=file accept=".json,application/json" style="display:none" onchange="importar(this)"></label>
   <p class=muted style="margin:0">Quando o diretor mandar um pacote novo, importe aqui. Quem acertou a mensalidade fica liberado.</p></div>
   <div class="card list menu" style="padding:4px 12px">
@@ -867,9 +913,26 @@ function rMaisRestrito(){const ga=S.pacoteEm;const nb=S.babas.filter(b=>!b.envia
 function rAniv(){const L=S.jogadores.filter(j=>j.ativo&&j.nasc).map(j=>({j,...proxAniv(j.nasc)})).sort((a,b)=>a.dias-b.dias);const sem=S.jogadores.filter(j=>j.ativo&&!j.nasc).length;
   return voltar()+`<div class="card list" style="padding:4px 12px"><h3 style="margin:10px 0 2px">🎂 Próximos aniversários</h3>${L.map(x=>`<div class=it style="cursor:default"><div class=grow><b>${esc(x.j.nome)}</b><div class=muted>${SEM[diaSemana(x.data)]}, ${fmtData(x.data)} · faz ${x.faz} anos</div></div>${x.dias===0?'<span class="tag grn">Hoje!</span>':x.dias<=7?`<span class="tag yel">em ${x.dias} dia${x.dias>1?'s':''}</span>`:`<span class=muted>${x.dias} dias</span>`}</div>`).join('')||'<p class=muted>Ninguém com data de nascimento cadastrada.</p>'}</div>
   ${sem?`<p class=muted>${sem} jogador${sem>1?'es':''} sem data de nascimento.</p>`:''}`}
-function rMais(){if(ui.mais==='aniv')return rAniv();if(ui.mais==='stats')return rStats();if(ui.mais==='freq')return rFreq();if(ui.mais==='hist')return rHist();if(ui.mais==='config'&&!restrito())return rConfig();if(restrito())return rMaisRestrito();
+function rMaisModoBaba(){return`<div class=card style="border-color:var(--neon)"><h2 style="margin-bottom:4px">🔒 Modo baba ativo</h2><p class=muted style="margin-top:0">As abas de jogadores, mensalidades, caixa e as configurações estão escondidas. Só quem tem o PIN volta ao modo completo.</p><button class="btn block" onclick="sairModoBaba()">Sair do modo baba</button></div>
+  <div class="card list menu" style="padding:4px 12px"><div class=it onclick="ui.mais='stats';render()"><span class=i>🏆</span><div class=grow><b>Estatísticas</b><div class=muted>Artilharia, assistências, defesas</div></div>›</div>
+  <div class=it onclick="ui.mais='aniv';render()"><span class=i>🎂</span><div class=grow><b>Aniversariantes</b></div>›</div></div>`}
+function ativarModoBaba(){if(!S.config.pinBaba){abre(`<h2>🔒 Criar PIN do modo baba</h2><p class=muted style="margin-top:0">O modo baba esconde a parte financeira para outra pessoa usar o seu celular no baba. Crie um PIN de 4 números: ele será pedido para sair do modo. <b>Não esqueça esse PIN.</b></p>
+   <div class=row><label class=grow>PIN<input id=pin1 type=password inputmode=numeric maxlength=4 pattern="[0-9]*"></label><label class=grow>Repita o PIN<input id=pin2 type=password inputmode=numeric maxlength=4 pattern="[0-9]*"></label></div>
+   <div class=gap><button class=btn onclick="criarPin()">Criar e ativar</button><button class="btn ghost" onclick="fecha()">Cancelar</button></div>`);return}
+  S.modoBaba=true;save();tab='baba';fecha();render();toast('🔒 Modo baba ativado')}
+function criarPin(){const a=document.getElementById('pin1').value,b=document.getElementById('pin2').value;if(!/^\d{4}$/.test(a)){toast('O PIN precisa ter 4 números');return}if(a!==b){toast('Os PINs não conferem');return}
+  S.config.pinBaba=a;S.modoBaba=true;save();tab='baba';fecha();render();toast('🔒 Modo baba ativado')}
+function sairModoBaba(){abre(`<h2>Sair do modo baba</h2><label>Digite o PIN<input id=pinx type=password inputmode=numeric maxlength=4 pattern="[0-9]*" onkeyup="if(this.value.length===4)confPin()"></label>
+  <div class=gap><button class=btn onclick="confPin()">Confirmar</button><button class="btn ghost" onclick="fecha()">Cancelar</button></div>`);setTimeout(()=>{const e=document.getElementById('pinx');if(e)e.focus()},60)}
+function confPin(){const v=document.getElementById('pinx').value;if(v!==S.config.pinBaba){toast('PIN incorreto');document.getElementById('pinx').value='';return}S.modoBaba=false;save();fecha();render();toast('Modo completo liberado')}
+/* ----- tela acesa durante o baba ----- */
+let _wl=null;
+async function wakeSync(){try{if(S.atual&&!_wl&&navigator.wakeLock&&document.visibilityState==='visible'){_wl=await navigator.wakeLock.request('screen');_wl.addEventListener('release',()=>{_wl=null})}
+  else if(!S.atual&&_wl){await _wl.release();_wl=null}}catch(e){}}
+if(temDOM)document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')wakeSync()});
+function rMais(){if(S.modoBaba&&!['stats','aniv'].includes(ui.mais))return rMaisModoBaba();if(ui.mais==='aniv')return rAniv();if(ui.mais==='stats')return rStats();if(ui.mais==='freq')return rFreq();if(ui.mais==='hist')return rHist();if(ui.mais==='config'&&!restrito())return rConfig();if(restrito())return rMaisRestrito();
   const ub=S.config.ultimoBackup;
-  return`<div class="card list menu" style="padding:4px 12px">
+  return`<button class="btn sec block" style="margin-bottom:12px" onclick="ativarModoBaba()">🔒 Ativar modo baba (esconder financeiro)</button><div class="card list menu" style="padding:4px 12px">
   <div class=it onclick="ui.mais='aniv';render()"><span class=i>🎂</span><div class=grow><b>Aniversariantes</b><div class=muted>Próximos aniversários dos sócios</div></div>›</div>
   <div class=it onclick="ui.mais='stats';render()"><span class=i>🏆</span><div class=grow><b>Estatísticas</b><div class=muted>Artilharia, assistências, defesas, desarmes</div></div>›</div>
   <div class=it onclick="ui.mais='freq';render()"><span class=i>📅</span><div class=grow><b>Frequência</b><div class=muted>Quem está indo e quem sumiu</div></div>›</div>
@@ -943,12 +1006,13 @@ function rConfig(){const c=S.config;
   <label>Peso da idade na média<select id=cpi><option value=0 ${+c.pesoIdade===0?'selected':''}>Não conta</option><option value=0.5 ${+c.pesoIdade===0.5?'selected':''}>Pouco (metade de um critério)</option><option value=1 ${+c.pesoIdade===1?'selected':''}>Igual a um critério</option></select></label>
   <label>Critérios de avaliação (um por linha)<textarea id=cc rows=6>${esc(c.criterios.join('\n'))}</textarea></label>
   <label class=ck><input type=checkbox id=cm ${c.mostrarMedias?'checked':''}> Mostrar a média dos times no sorteio</label></div>
+  <div class=card><h3>🔒 Modo baba</h3><p class=muted style="margin-top:0">${c.pinBaba?'PIN criado.':'Nenhum PIN criado ainda.'} Para trocar, digite um novo PIN de 4 números (deixe vazio para manter).</p><label>Novo PIN<input id=cpin type=password inputmode=numeric maxlength=4></label></div>
   <button class="btn block" onclick="salvarConfig()">Salvar configurações</button>
   <div class=card style="margin-top:20px"><h3>Zona de perigo</h3><p class=muted style="margin-top:0">Apaga tudo deste aparelho. Faça um backup antes.</p><button class="btn red" onclick="apagarTudo()">Apagar todos os dados</button></div>`}
 function salvarConfig(){const g=x=>document.getElementById(x),c=S.config;
   c.valorUm=parseFloat(g('c1').value)||0;c.valorConvidado=parseFloat(g('ccv').value)||0;c.valorAmarelo=parseFloat(g('cam').value)||0;c.valorVermelho=parseFloat(g('cve').value)||0;c.suspVermelho=Math.max(0,parseInt(g('csv').value)||0);c.valorDois=parseFloat(g('c2').value)||0;c.vencimento=Math.min(28,Math.max(1,parseInt(g('cv').value)||10));
   if(/^\d{4}-\d{2}$/.test(g('ci').value))c.inicioCobranca=g('ci').value;c.aluguel=parseFloat(g('ca').value)||0;c.aluguelDia=Math.min(28,Math.max(1,parseInt(g('cad').value)||2));c.saldosIniciais={};CAIXAS.forEach((x,i)=>c.saldosIniciais[x]=parseFloat(g('csi'+i).value)||0);c.dataAbertura=g('cda').value||'';
-  {c.linhaTer=Math.min(20,Math.max(1,parseInt(g('clt').value)||6));c.linhaSab=Math.min(20,Math.max(1,parseInt(g('cls').value)||6));const po=g('cpo').value.split('\n').map(x=>x.trim()).filter(Boolean);c.posicoes=[...new Set(po)];}c.horaTer=g('cht').value||c.horaTer;c.horaSab=g('chs').value||c.horaSab;c.tolerancia=Math.max(0,parseInt(g('ctl').value)||0);c.duracao=Math.max(0,parseInt(g('cdu').value)||0);ui.porTime=c.porTime;c.mostrarMedias=g('cm').checked;c.pesoIdade=+g('cpi').value;
+  {c.linhaTer=Math.min(20,Math.max(1,parseInt(g('clt').value)||6));c.linhaSab=Math.min(20,Math.max(1,parseInt(g('cls').value)||6));const po=g('cpo').value.split('\n').map(x=>x.trim()).filter(Boolean);c.posicoes=[...new Set(po)];}c.horaTer=g('cht').value||c.horaTer;c.horaSab=g('chs').value||c.horaSab;c.tolerancia=Math.max(0,parseInt(g('ctl').value)||0);c.duracao=Math.max(0,parseInt(g('cdu').value)||0);ui.porTime=c.porTime;c.mostrarMedias=g('cm').checked;{const np=g('cpin').value.trim();if(np){if(/^\d{4}$/.test(np))c.pinBaba=np;else toast('PIN não alterado: use 4 números')}}c.pesoIdade=+g('cpi').value;
   const cr=g('cc').value.split('\n').map(s=>s.trim()).filter(Boolean);c.criterios=[...new Set(cr)];
   save();render();toast('Configurações salvas')}
 function apagarTudo(){confirmar('Apagar <b>todos</b> os dados deste aparelho? Isso não pode ser desfeito.',()=>{const ub=null;S=defaults();S.config.ultimoBackup=ub;save();ui.sel.clear();ui.golOrdem=[];tab='baba';render();toast('Dados apagados')},'Apagar tudo',true)}
@@ -956,7 +1020,7 @@ function salvarArquivo(obj,name,share,okMsg,depois){const blob=new Blob([JSON.st
   if(share&&navigator.canShare){try{const file=new File([blob],name,{type:'application/json'});if(navigator.canShare({files:[file]})){navigator.share({files:[file],title:name}).then(()=>{depois&&depois();toast(okMsg)}).catch(()=>{});return}}catch(e){}}
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);depois&&depois();toast('Arquivo salvo: '+name)}
 function exportarPacote(share){const c=S.config;
-  const jog=S.jogadores.filter(j=>j.ativo).map(j=>({id:j.id,nome:j.nome,pos:j.pos,plano:j.plano,posicao:j.posicao||'',nasc:j.nasc||'',ativo:true,diretor:!!j.diretor,isento:!!j.isento,notas:j.notas||{},pagoAte:j.convidado?null:pagoAteJ(j),convidado:!!j.convidado,devendo:j.convidado?S.pendConv.some(p=>p.jogId===j.id):undefined}));
+  const jog=S.jogadores.filter(j=>j.ativo).map(j=>({id:j.id,nome:j.nome,pos:j.pos,plano:j.plano,time:j.time||'',posicao:j.posicao||'',nasc:j.nasc||'',ativo:true,diretor:!!j.diretor,isento:!!j.isento,notas:j.notas||{},pagoAte:j.convidado?null:pagoAteJ(j),convidado:!!j.convidado,devendo:j.convidado?S.pendConv.some(p=>p.jogId===j.id):undefined}));
   salvarArquivo({tipo:'acp-pacote-baba',geradoEm:new Date().toISOString(),config:{linhaTer:c.linhaTer,linhaSab:c.linhaSab,pesoIdade:c.pesoIdade,valorConvidado:c.valorConvidado,valorUm:c.valorUm,valorDois:c.valorDois,valorAmarelo:c.valorAmarelo,valorVermelho:c.valorVermelho,suspVermelho:c.suspVermelho,posicoes:c.posicoes,vencimento:c.vencimento,horaTer:c.horaTer,horaSab:c.horaSab,tolerancia:c.tolerancia,duracao:c.duracao,criterios:c.criterios},jogadores:jog,eventos:S.eventos.filter(e=>e.data>=addMes(mesAtual(),-3)+'-01').map(e=>({id:e.id,nome:e.nome,data:e.data,valor:e.valor,caixa:e.caixa||'Associação'})),cartoes:S.cartoes.filter(x=>!x.cancelado&&(!x.pago||suspRest(x)>0)).map(x=>({...x,cumpridas:babasDepois(x),local:undefined}))},
     `acp-pacote-baba-${hoje()}.json`,share,'Pacote enviado')}
 function exportarBabas(share){const bs=S.babas.filter(b=>!(S.atual&&S.atual.babaId===b.id));const rc=S.recebidos||[];if(!bs.length&&!rc.length&&!(S.cartoes||[]).some(c=>c.local)){toast('Nada para enviar ainda');return}
